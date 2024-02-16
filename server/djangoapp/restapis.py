@@ -1,6 +1,6 @@
 import requests
 import json
-from .models import CarDealer
+from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
 
 
@@ -12,13 +12,13 @@ import json
 from .models import CarDealer
 from requests.auth import HTTPBasicAuth
 
-def get_request(url, **kwargs):
+def get_request(url, kwargs):
     print(kwargs)
     print("GET from {} ".format(url))
     try:
         # Call get method of requests library with URL and parameters
         response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                    params=kwargs)
+                                    params={"id":kwargs})
     except:
         # If any error occurs
         print("Network exception occurred")
@@ -35,7 +35,7 @@ def get_request(url, **kwargs):
 # def get_dealers_from_cf(url, **kwargs):
 # - Call get_request() with specified arguments
 # - Parse JSON results into a CarDealer object list
-def get_dealers_from_cf(url, **kwargs):
+def get_dealers_from_cf(url, kwargs):
     results = []
     # Call get_request with a URL parameter
     json_result = get_request(url)
@@ -79,6 +79,32 @@ def get_dealer_by_id(url, **kwargs):
                                    id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
                                    short_name=dealer_doc["short_name"],
                                    st=dealer_doc["st"], zip=dealer_doc["zip"])
+            results.append(dealer_obj)
+
+    return results
+
+
+
+def get_dealer_reviews_from(url, dealerId):
+    results = []
+    # Call get_request with a URL parameter
+    json_result = get_request(url, dealerId)
+    if json_result:
+        # Get the row list in JSON as dealers
+        dealers = json_result
+        
+        # For each dealer object
+        for dealer in dealers:
+            # Get its content in `doc` object
+            dealer_doc = dealer
+            print("DEaler",dealer_doc)
+            # Create a CarDealer object with values in `doc` object
+            dealer_obj = DealerReview(dealership=dealer_doc["dealership"], name=dealer_doc["name"], purchase=dealer_doc["purchase"],
+                                   id=dealer_doc["id"], review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"],
+                                   car_make=dealer_doc["car_make"], car_year=dealer_doc["car_year"],car_model=dealer_doc["car_model"])
+
+
+
             results.append(dealer_obj)
 
     return results
