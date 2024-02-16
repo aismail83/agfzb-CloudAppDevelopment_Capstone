@@ -12,7 +12,7 @@ import json
 from .models import CarDealer
 from requests.auth import HTTPBasicAuth
 
-def get_request(url, kwargs):
+def get_request1(url, **kwargs):
     print(kwargs)
     print("GET from {} ".format(url))
     try:
@@ -27,6 +27,20 @@ def get_request(url, kwargs):
     json_data = json.loads(response.text)
     return json_data
 
+def get_request(url, dealerId, **kwargs):
+    print(kwargs)
+    print("GET from {} ".format(url))
+    try:
+        # Call get method of requests library with URL and parameters
+        response = requests.get(url, headers={'Content-Type': 'application/json'},
+                                    params={"id":dealerId})
+    except:
+        # If any error occurs
+        print("Network exception occurred")
+        status_code = response.status_code
+        print("With status {} ".format(status_code))
+    json_data = json.loads(response.text)
+    return json_data
 # Create a `post_request` to make HTTP POST requests
 # e.g., response = requests.post(url, params=kwargs, json=payload)
 
@@ -35,10 +49,10 @@ def get_request(url, kwargs):
 # def get_dealers_from_cf(url, **kwargs):
 # - Call get_request() with specified arguments
 # - Parse JSON results into a CarDealer object list
-def get_dealers_from_cf(url, kwargs):
+def get_dealers_from_cf(url, **kwargs):
     results = []
     # Call get_request with a URL parameter
-    json_result = get_request(url)
+    json_result = get_request1(url)
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result
@@ -61,10 +75,10 @@ def get_dealers_from_cf(url, kwargs):
 # def get_dealer_by_id_from_cf(url, dealerId):
 # - Call get_request() with specified arguments
 # - Parse JSON results into a DealerView object list
-def get_dealer_by_id(url, **kwargs):
+def get_dealer_by_id(url, dealerId, **kwargs):
     results = []
     # Call get_request with a URL parameter
-    json_result = get_request(url)
+    json_result = get_request(url, dealerId)
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result
@@ -85,7 +99,7 @@ def get_dealer_by_id(url, **kwargs):
 
 
 
-def get_dealer_reviews_from(url, dealerId):
+def get_dealer_reviews_from(url, dealerId, **kwargs):
     results = []
     # Call get_request with a URL parameter
     json_result = get_request(url, dealerId)

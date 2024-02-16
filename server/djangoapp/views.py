@@ -80,7 +80,7 @@ def registration_request(request):
             return render(request, 'djangoapp/registration.html', context)
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
-def get_dealerships(request):
+def get_dealerships(request ):
 
     if request.method == "GET":
         url = "https://ismailaltoum-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
@@ -98,9 +98,9 @@ def get_dealerships(request):
 def get_dealer_byid(request, dealer_id):
 
     if request.method == "GET":
-        url = "https://ismailaltoum-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"+"?id="+dealer_id
+        url = "https://ismailaltoum-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
         # Get dealers from the URL
-        dealerships = get_dealer_by_id(url)
+        dealerships = get_dealer_by_id(url, dealer_id)
         # Concat all dealer's short name
         dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
         # Return a list of dealer short name
