@@ -90,13 +90,10 @@ class CarDealer:
 class DealerReview:
 
     def __init__(self, dealership, name, purchase, review, purchase_date, car_make, car_model, car_year, id):
-        # Dealer address
+        self.id = id
         self.dealership = dealership
-        # Dealer city
         self.name = name
-        # Dealer Full Name
         self.purchase = purchase
-        # Dealer id
         self.review = review
         # Location purchase_date
         self.purchase_date = purchase_date
@@ -110,8 +107,6 @@ class DealerReview:
         # Dealer id
         self.id = id
 
-
-    
     def __str__(self):
             return "Dealer name: " + self.name# <HINT> Create a plain Python class `CarDealer` to hold dealer data
                     

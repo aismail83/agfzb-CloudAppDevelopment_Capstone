@@ -111,7 +111,7 @@ def get_dealer_details(request, dealer_id):
     if request.method == "GET":
         url = "https://ismailaltoum-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
         # Get dealers from the URL
-        dealerships = get_dealer_reviews_from(url,dealer_id )
+        dealerships = get_dealer_reviews_from(url, dealer_id )
         # Concat all dealer's short name
         dealer_names = ' '.join([dealer.name for dealer in dealerships])
         # Return a list of dealer short name
