@@ -1,7 +1,7 @@
-const express = require('express');
+import express, { json } from 'express';
 const app = express();
 const port = process.env.PORT || 3000;
-const Cloudant = require('@cloudant/cloudant');
+import Cloudant from '@cloudant/cloudant';
 
 // Initialize Cloudant connection with IAM authentication
 async function dbCloudantConnect() {
@@ -26,7 +26,7 @@ let db;
     db = await dbCloudantConnect();
 })();
 
-app.use(express.json());
+app.use(json());
 
 // Define a route to get all dealerships with optional state and ID filters
 app.get('/dealerships/get', (req, res) => {

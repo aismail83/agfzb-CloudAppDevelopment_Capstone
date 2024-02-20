@@ -15,16 +15,18 @@ from requests.auth import HTTPBasicAuth
 def get_request1(url, **kwargs):
     print(kwargs)
     print("GET from {} ".format(url))
-     if api_key:
         # Call get method of requests library with URL and parameters
-        response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                   params=params,auth=HTTPBasicAuth('apikey', 'dbAWzru5JqOoFB2X9FyBVty4VhloLUWR1t6ENZ6U14kL'))
-    else:
-        response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                   params=params)
+    try:
+    # Call get method of requests library with URL and parameters
+        response = requests.get(url, headers={'Content-Type': 'application/json'},)
+    except:
+        # If any error occurs
+        print("Network exception occurred")
+        status_code = response.status_code
+        print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
     return json_data
-
+   
 def get_request(url, dealerId, **kwargs):
     print(kwargs)
     print("GET from {} ".format(url))
@@ -41,12 +43,11 @@ def get_request(url, dealerId, **kwargs):
     return json_data
 # Create a `post_request` to make HTTP POST requests
 # e.g., response = requests.post(url, params=kwargs, json=payload)
-post_request(url, json_payload, **kwargs):
+def post_request(url, json_payload, **kwargs):
             url= 'https://ismailaltoum-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review'
             
             result = post_request(url, json_payload, dealerId=dealer_id)
             return result
-
 # Create a get_dealers_from_cf method to get dealers from a cloud function
 # def get_dealers_from_cf(url, **kwargs):
 # - Call get_request() with specified arguments
